@@ -75,4 +75,4 @@ socket.on("clickGet", data => (canvasState = data || []));
 canvas.addEventListener("click", clickHandler);
 canvas.addEventListener("mousemove", hoverHandler);
 
-setInterval(main, 100);
+setInterval(main, 60**-1);
