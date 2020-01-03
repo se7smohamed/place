@@ -1,20 +1,24 @@
-var socket = io("http://localhost:3000/");
+var socket = io();
 let canvasState = [];
 let state = { color: "#fff" };
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 let scale = 15;
-dx = window.innerWidth;
-dy = window.innerHeight;
-canvas.width = dx;
-canvas.height = dy;
 let lastMouse = { x: 0, y: 0, bg: "#000" };
 let lastHover = false;
 let color = "#fff";
 
+let resizeHandler = () => {
+  let dx = window.innerWidth;
+  let dy = window.innerHeight;
+  canvas.width = dx;
+  canvas.height = dy;
+};
+
 let changeColor = c => {
   color = c;
 };
+
 let main = () => {
   // clear
   ctx.fillStyle = "#001";
@@ -74,5 +78,7 @@ socket.on("clickGet", data => (canvasState = data || []));
 
 canvas.addEventListener("click", clickHandler);
 canvas.addEventListener("mousemove", hoverHandler);
+window.addEventListener("resize", resizeHandler);
 
-setInterval(main, 60**-1);
+resizeHandler();
+setInterval(main, 60 ** -1);

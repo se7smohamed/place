@@ -1,16 +1,31 @@
-const server = require("http").createServer();
-const io = require("socket.io")(server);
+var express = require("express");
+var app = express();
+var server = require("http").Server(app);
+var io = require("socket.io")(server);
+var cors = require("cors");
+
+let PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}.`);
+});
+
+app.use(cors());
+app.use(express.static("client"));
+app.get("/", function(req, res) {
+  res.sendFile("index.html");
+});
 
 // holds current canvas state
 let globalState = [];
 
-// draw a random shape
-for (let i = 0; i < 100; i++) {
-  let x = Math.floor(Math.floor(Math.random() * 10) * 30) + 30;
-  let y = Math.floor(Math.floor(Math.random() * 10) * 30) + 30;
-  globalState[x] = globalState[x] || [];
-  globalState[x][y] = "#123";
-}
+let drawRandomShape = () => {
+  for (let i = 0; i < 100; i++) {
+    let x = Math.floor(Math.floor(Math.random() * 10) * 30) + 30;
+    let y = Math.floor(Math.floor(Math.random() * 10) * 30) + 30;
+    globalState[x] = globalState[x] || [];
+    globalState[x][y] = "#123";
+  }
+};
 
 io.on("connection", client => {
   // send current state to each new connection
@@ -24,7 +39,4 @@ io.on("connection", client => {
   });
 });
 
-let PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Server start on port ${PORT}.`);
-});
+drawRandomShape();
