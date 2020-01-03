@@ -2,14 +2,12 @@ var express = require("express");
 var app = express();
 var server = require("http").Server(app);
 var io = require("socket.io")(server);
-var cors = require("cors");
 
 let PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server started on port ${PORT}.`);
 });
 
-app.use(cors());
 app.use(express.static("client"));
 app.get("/", function(req, res) {
   res.sendFile("index.html");
