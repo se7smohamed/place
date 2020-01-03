@@ -70,10 +70,23 @@ let clickHandler = event => {
   socket.emit("click", { x: target.x, y: target.y, color: target.color });
 };
 
-socket.on("canvasState", data => {
-  canvasState = data || [];
+let setPlayers = players => {
+  state.players = players || 0;
+  setPlayersUI(players);
+};
+
+let setPlayersUI = players => {
+  let el = document.querySelector(".connected-players");
+  if (!el) return 1;
+  el.textContent = players + ` Player${players > 1 ? "s" : ""} Online`;
+};
+
+socket.on("startingState", startingState => {
+  canvasState = startingState.canvas || [];
+  setPlayers(startingState.players);
 });
 
+socket.on("connectedPlayers", players => setPlayers(players));
 socket.on("clickGet", data => (canvasState = data || []));
 
 canvas.addEventListener("click", clickHandler);

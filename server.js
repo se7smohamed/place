@@ -14,26 +14,36 @@ app.get("/", function(req, res) {
 });
 
 // holds current canvas state
-let globalState = [];
+let canvasState = [];
+let state = {
+  players: 0
+};
 
 let drawRandomShape = () => {
   for (let i = 0; i < 100; i++) {
     let x = Math.floor(Math.floor(Math.random() * 10) * 30) + 30;
     let y = Math.floor(Math.floor(Math.random() * 10) * 30) + 30;
-    globalState[x] = globalState[x] || [];
-    globalState[x][y] = "#123";
+    canvasState[x] = canvasState[x] || [];
+    canvasState[x][y] = "#123";
   }
 };
 
 io.on("connection", client => {
   // send current state to each new connection
-  client.emit("canvasState", globalState);
+  state.players++;
+  io.emit("connectedPlayers", state.players);
+  client.emit("startingState", { canvas: canvasState, players: state.players });
 
   client.on("click", data => {
     // recieved a new click, update state and notify other users
-    globalState[data.x] = globalState[data.x] || [];
-    globalState[data.x][data.y] = data.color;
-    io.emit("clickGet", globalState);
+    canvasState[data.x] = canvasState[data.x] || [];
+    canvasState[data.x][data.y] = data.color;
+    io.emit("clickGet", canvasState);
+  });
+
+  client.on("disconnect", () => {
+    state.players--;
+    io.emit("connectedPlayers", state.players);
   });
 });
 

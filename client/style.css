@@ -1,35 +1,49 @@
-*{padding: 0px;margin: 0px;
-    font-family: Arial, Helvetica, sans-serif;
-    user-select: none;
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  user-select: none;
 }
-body{
-    overflow: hidden;
-}
-
-#canvas{height: 100%;width: 100%;background-color: #001;}
-
-.settings{
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    /* height: 20%; */
-    width: 70%;
-    border-top-left-radius: 12px;
-    color: white;
+body {
+  overflow: hidden;
 }
 
-.colors{
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin: 0 1em 1em 0 ;
+#canvas {
+  height: 100%;
+  width: 100%;
+  background-color: #001;
 }
-.color-sample{
-    width: 30px;
-    height: 30px;
-    margin: 10px 10px 10px 0;
-    border-radius: 10px;
-    background: red;
-    display: inline-block;
-    cursor: pointer;
+
+.settings {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  /* height: 20%; */
+  width: 70%;
+  border-top-left-radius: 12px;
+  color: white;
+}
+
+.colors {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0 1em 1em 0;
+}
+.color-sample {
+  width: 30px;
+  height: 30px;
+  margin: 10px 10px 10px 0;
+  border-radius: 10px;
+  background: red;
+  display: inline-block;
+  cursor: pointer;
+}
+.connected-players {
+  position: absolute;
+  right: 0px;
+  top: 1px;
+  margin: 1rem;
+  color: white;
+  font-size: 1.4rem;
 }
